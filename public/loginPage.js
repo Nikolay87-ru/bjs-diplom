@@ -5,7 +5,7 @@ class UserForm {
     this.userMap = new Map(data.map);
   }
 
-  addToUserMap(login, password) {
+  loginFormCallback(login, password) {
     this.userMap.set(login, password);
   }
 }
@@ -21,5 +21,5 @@ const usersData = {
 };
 
 const user = new UserForm(usersData);
-user.addToUserMap("alexey@demo.ru", "demo")
+user.loginFormCallback("alexey@demo.ru", "demo")
 console.log(user.userMap);
