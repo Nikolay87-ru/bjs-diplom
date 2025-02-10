@@ -6,7 +6,13 @@ class UserForm {
   }
 
   loginFormCallback(data) {
-    this.userMap.set(data);
+    ApiConnector.login(data, (success) => {
+      if (success === true) {
+        location.reload();
+      } else {
+        console.warn(`Пользователь с логином ${response} и указанным паролем не найден`) || alert(data);
+      }
+    });
   }
 }
 
