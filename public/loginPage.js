@@ -6,11 +6,12 @@ class UserForm {
   }
 
   loginFormCallback(data) {
-    ApiConnector.login(data, (success) => {
-      if (success === true) {
+    ApiConnector.login(data, (response) => {
+      if (response.success) {
         location.reload();
       } else {
-        console.warn(`Пользователь с логином ${response} и указанным паролем не найден`) || alert(data);
+        console.warn(`Пользователь с логином ${data.login} и указанным паролем не найден.`);
+        alert('Ошибка входа: Неверный логин или пароль.');
       }
     });
   }
