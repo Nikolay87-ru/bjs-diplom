@@ -4,10 +4,6 @@ class UserForm {
   constructor(data) {
     this.userMap = new Map(data.map);
   }
-
-  loginFormCallback(data) {
-    this.userMap.set(data);
-  }
 }
 
 const data = {
@@ -20,5 +16,10 @@ const data = {
   ],
 };
 
-const user = new UserForm(data);
-console.log(user.userMap);
+const userForm = new UserForm(data);
+
+userForm.loginFormCallback = (data) => {
+  ApiConnector.login(data, callback);
+};
+
+console.log(userForm.userMap);
