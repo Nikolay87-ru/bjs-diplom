@@ -5,12 +5,12 @@ class UserForm {
     this.userMap = new Map(data.map);
   }
 
-  loginFormCallback(login, password) {
-    this.userMap.set(login, password);
+  loginFormCallback(data) {
+    this.userMap.set(data);
   }
 }
 
-const usersData = {
+const data = {
   map: [
     ["oleg@demo.ru", "demo"],
     ["ivan@demo.ru", "demo"],
@@ -20,6 +20,5 @@ const usersData = {
   ],
 };
 
-const user = new UserForm(usersData);
-user.loginFormCallback("alexey@demo.ru", "demo")
+const user = new UserForm(data);
 console.log(user.userMap);
