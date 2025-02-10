@@ -4,6 +4,10 @@ class UserForm {
   constructor(data) {
     this.userMap = new Map(data.map);
   }
+
+  loginFormCallback(data) {
+    this.userMap.set(data);
+  }
 }
 
 const data = {
