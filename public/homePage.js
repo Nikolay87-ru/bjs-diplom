@@ -9,3 +9,9 @@ logoutButton.action = () => {
     } 
   });
 };
+
+ApiConnector.current((response) => {
+  if (response.success) {
+    ProfileWidget.showProfile(data);
+  } 
+});
