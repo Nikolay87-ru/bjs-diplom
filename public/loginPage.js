@@ -17,7 +17,7 @@ userForm.registerFormCallback = (data) => {
     if (response.success) {
       location.reload();
     } else {
-      console.errer(userForm.setRegisterErrorMessage(response.message));
+      console.error(userForm.setRegisterErrorMessage(response.message));
     }
   });
 };
