@@ -7,23 +7,17 @@ userForm.loginFormCallback = (data) => {
     if (response.success) {
       location.reload();
     } else {
-      console.error(
-        `Пользователь с логином ${data.login} и указанным паролем не найден`
-      );
-      alert("Ошибка входа: Неверный логин или пароль");
+      console.error(userForm.setLoginErrorMessage(response.message));
     }
   });
-}
+};
 
 userForm.registerFormCallback = (data) => {
   ApiConnector.register(data, (response) => {
     if (response.success) {
       location.reload();
     } else {
-      console.errer(
-        `Пользователь с логином ${data.login} и указанным паролем не найден`
-      );
-      alert("Ошибка входа: Неверный логин или пароль");
+      console.errer(userForm.setRegisterErrorMessage(response.message));
     }
   });
-}
+};
