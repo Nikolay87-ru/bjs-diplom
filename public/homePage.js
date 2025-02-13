@@ -1,7 +1,5 @@
 "use strict";
 
-const { response } = require("express");
-
 const logoutButton = new LogoutButton();
 
 logoutButton.action = () => {
@@ -24,11 +22,12 @@ const ratesBoard = new RatesBoard();
 function getExchangeRate() {
   ApiConnector.getStocks(answer => {
     if (answer.success) {
-      clearTable();
-      ratesBoard.fillTable(data);
+      ratesBoard.clearTable();
+      ratesBoard.fillTable(answer.data);
     } 
   })
 }
 
 getExchangeRate()
 
+const intervalId = setInterval(getExchangeRate, 60000);
