@@ -44,3 +44,14 @@ moneyManager.addMoneyCallback = (data) => {
     }
   });
 }
+
+moneyManager.conversionMoneyCallback = (data) => {
+  ApiConnector.convertMoney(data, (response) => {
+    if (response.success) {
+      ProfileWidget.showProfile(response.data);
+      moneyManager.setMessage(response.success, "Конвертация прошла успешно!");
+    } else {
+      moneyManager.setMessage(response.error, "Ошибка ввода! Введите сумму и выберите конвертируемую валюту!");
+    }
+  });
+}
