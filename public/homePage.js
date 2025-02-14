@@ -20,14 +20,26 @@ ApiConnector.current((response) => {
 const ratesBoard = new RatesBoard();
 
 function getExchangeRate() {
-  ApiConnector.getStocks(answer => {
-    if (answer.success) {
+  ApiConnector.getStocks((response) => {
+    if (response.success) {
       ratesBoard.clearTable();
-      ratesBoard.fillTable(answer.data);
+      ratesBoard.fillTable(response.data);
     } 
-  })
+  });
 }
 
 getExchangeRate()
 
 const intervalId = setInterval(getExchangeRate, 60000);
+
+const moneyManager = new MoneyManager();
+
+moneyManager.addMoneyCallback = () => {
+  ApiConnector.addMoney(data, (response) => {
+    if (response.success) {
+      moneyManager.showProfile();
+    } else {
+      moneyManager.setMessagee(response.error);
+    }
+  });
+}
