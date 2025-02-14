@@ -34,12 +34,12 @@ const intervalId = setInterval(getExchangeRate, 60000);
 
 const moneyManager = new MoneyManager();
 
-moneyManager.addMoneyCallback = () => {
+moneyManager.addMoneyCallback = (data) => {
   ApiConnector.addMoney(data, (response) => {
     if (response.success) {
-      moneyManager.showProfile();
+      ProfileWidget.showProfile(response.data);
     } else {
-      moneyManager.setMessagee(response.error);
+      moneyManager.setMessage(response.error, "Ошибка ввода! Введите сумму и выберите валюту");
     }
   });
 }
