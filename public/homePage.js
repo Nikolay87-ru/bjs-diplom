@@ -38,8 +38,9 @@ moneyManager.addMoneyCallback = (data) => {
   ApiConnector.addMoney(data, (response) => {
     if (response.success) {
       ProfileWidget.showProfile(response.data);
+      moneyManager.setMessage(response.success, "Баланс пополнен!");
     } else {
-      moneyManager.setMessage(response.error, "Ошибка ввода! Введите сумму и выберите валюту");
+      moneyManager.setMessage(response.error, "Ошибка ввода! Введите сумму и выберите валюту!");
     }
   });
 }
