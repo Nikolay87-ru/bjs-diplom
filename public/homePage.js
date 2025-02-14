@@ -55,3 +55,14 @@ moneyManager.conversionMoneyCallback = (data) => {
     }
   });
 }
+
+moneyManager.sendMoneyCallback = (data) => {
+  ApiConnector.transferMoney(data, (response) => {
+    if (response.success) {
+      ProfileWidget.showProfile(response.data);
+      moneyManager.setMessage(response.success, "Перевод денег прошел успешно!");
+    } else {
+      moneyManager.setMessage(response.error, "Ошибка ввода! Выберите пользователя, которому будут переведены деньги, введите сумму и выберите валюту!");
+    }
+  });
+}
