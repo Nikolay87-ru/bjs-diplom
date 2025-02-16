@@ -66,3 +66,15 @@ moneyManager.sendMoneyCallback = (data) => {
     }
   });
 }
+
+const favoritesWidget = new FavoritesWidget();
+
+  ApiConnector.getFavorites((response) => {
+    if (response.success) {
+      favoritesWidget.clearTable();;
+      favoritesWidget.fillTable(response.data);
+      moneyManager.updateUsersList(response.data);
+    } 
+  });
+
+
