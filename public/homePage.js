@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 const logoutButton = new LogoutButton();
 
@@ -77,4 +77,26 @@ const favoritesWidget = new FavoritesWidget();
     } 
   });
 
+  favoritesWidget.addUserCallback = (data) => {
+    ApiConnector.addUserToFavorites(data, (response) => {
+      if (response.success) {
+        favoritesWidget.clearTable();;
+        favoritesWidget.fillTable(response.data);
+        moneyManager.updateUsersList(response.data);
+      } else {
+        favoritesWidget.setMessage(response.error, "Ошибка! Введите id и имя пользователя!");
+      }
+    });
+  }
 
+  favoritesWidget.removeUserCallback = (data) => {
+    ApiConnector.removeUserFromFavorites(data, (response) => {
+      if (response.success) {
+        favoritesWidget.clearTable();;
+        favoritesWidget.fillTable(response.data);
+        moneyManager.updateUsersList(response.data);
+      } else {
+        favoritesWidget.setMessage(response.error, "Ошибка! Введите id и имя пользователя!");
+      }
+    });
+  }
