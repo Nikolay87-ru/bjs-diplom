@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const logoutButton = new LogoutButton();
 
@@ -6,16 +6,15 @@ logoutButton.action = () => {
   ApiConnector.logout((response) => {
     if (response.success) {
       location.reload();
-    } 
+    }
   });
 };
 
 ApiConnector.current((response) => {
   if (response.success) {
     ProfileWidget.showProfile(response.data);
-  } 
+  }
 });
-
 
 const ratesBoard = new RatesBoard();
 
@@ -24,11 +23,11 @@ function getExchangeRate() {
     if (response.success) {
       ratesBoard.clearTable();
       ratesBoard.fillTable(response.data);
-    } 
+    }
   });
 }
 
-getExchangeRate()
+getExchangeRate();
 
 const intervalId = setInterval(getExchangeRate, 60000);
 
@@ -38,65 +37,88 @@ moneyManager.addMoneyCallback = (data) => {
   ApiConnector.addMoney(data, (response) => {
     if (response.success) {
       ProfileWidget.showProfile(response.data);
-      moneyManager.setMessage(response.success, "Баланс пополнен!");
+      moneyManager.setMessage(true, "Баланс пополнен!");
     } else {
-      moneyManager.setMessage(response.error, "Ошибка ввода! Введите сумму и выберите валюту!");
+      moneyManager.setMessage(
+        false,
+        "Ошибка ввода! Введите сумму и выберите валюту!"
+      );
     }
   });
-}
+};
 
 moneyManager.conversionMoneyCallback = (data) => {
+
   ApiConnector.convertMoney(data, (response) => {
     if (response.success) {
       ProfileWidget.showProfile(response.data);
-      moneyManager.setMessage(response.success, "Конвертация прошла успешно!");
+      moneyManager.setMessage(true, "Конвертация прошла успешно!");
     } else {
-      moneyManager.setMessage(response.error, "Ошибка ввода! Введите сумму и выберите конвертируемую валюту!");
+      moneyManager.setMessage(
+        false,
+        "У вас недостаточно средств на счете для конвертации! Введите сумму и выберите конвертируемую валюту!"
+      );
     }
   });
-}
+};
 
 moneyManager.sendMoneyCallback = (data) => {
+
   ApiConnector.transferMoney(data, (response) => {
     if (response.success) {
       ProfileWidget.showProfile(response.data);
-      moneyManager.setMessage(response.success, "Перевод денег прошел успешно!");
+      moneyManager.setMessage(
+        true,
+        "Перевод денег прошел успешно!"
+      );
     } else {
-      moneyManager.setMessage(response.error, "Ошибка ввода! Выберите пользователя, которому будут переведены деньги, введите сумму и выберите валюту!");
+      moneyManager.setMessage(
+        false,
+        "Ошибка перевода! Выберите пользователя, которому будут переведены деньги, введите сумму и выберите валюту! Сумма перевода не должна превышать сумму на вашем счету!"
+      );
     }
   });
-}
+};
 
 const favoritesWidget = new FavoritesWidget();
 
-  ApiConnector.getFavorites((response) => {
+ApiConnector.getFavorites((response) => {
+  if (response.success) {
+    favoritesWidget.clearTable();
+    favoritesWidget.fillTable(response.data);
+    moneyManager.updateUsersList(response.data);
+  }
+});
+
+favoritesWidget.addUserCallback = (data) => {
+  ApiConnector.addUserToFavorites(data, (response) => {
     if (response.success) {
-      favoritesWidget.clearTable();;
+      favoritesWidget.clearTable();
       favoritesWidget.fillTable(response.data);
       moneyManager.updateUsersList(response.data);
+      favoritesWidget.setMessage(
+        true,
+        "Пользователь добавлен в избранное!"
+      );
+    } else {
+      favoritesWidget.setMessage(
+        false,
+        "Ошибка! Введите id и имя пользователя!"
+      );
+    }
+  });
+};
+
+favoritesWidget.removeUserCallback = (data) => {
+  ApiConnector.removeUserFromFavorites(data, (response) => {
+    if (response.success) {
+      favoritesWidget.clearTable();
+      favoritesWidget.fillTable(response.data);
+      moneyManager.updateUsersList(response.data);
+      favoritesWidget.setMessage(
+        true,
+        "Пользователь удален!"
+      );
     } 
   });
-
-  favoritesWidget.addUserCallback = (data) => {
-    ApiConnector.addUserToFavorites(data, (response) => {
-      if (response.success) {
-        favoritesWidget.clearTable();;
-        favoritesWidget.fillTable(response.data);
-        moneyManager.updateUsersList(response.data);
-      } else {
-        favoritesWidget.setMessage(response.error, "Ошибка! Введите id и имя пользователя!");
-      }
-    });
-  }
-
-  favoritesWidget.removeUserCallback = (data) => {
-    ApiConnector.removeUserFromFavorites(data, (response) => {
-      if (response.success) {
-        favoritesWidget.clearTable();;
-        favoritesWidget.fillTable(response.data);
-        moneyManager.updateUsersList(response.data);
-      } else {
-        favoritesWidget.setMessage(response.error, "Ошибка! Введите id и имя пользователя!");
-      }
-    });
-  }
+};
