@@ -41,7 +41,7 @@ moneyManager.addMoneyCallback = (data) => {
     } else {
       moneyManager.setMessage(
         false,
-        "Ошибка ввода! Введите сумму и выберите валюту!"
+        "Ошибка пополнения счета! Введите сумму и выберите валюту!"
       );
     }
   });
