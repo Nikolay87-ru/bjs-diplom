@@ -39,10 +39,7 @@ moneyManager.addMoneyCallback = (data) => {
       ProfileWidget.showProfile(response.data);
       moneyManager.setMessage(true, "Баланс пополнен!");
     } else {
-      moneyManager.setMessage(
-        false,
-        "Ошибка пополнения счета! Введите сумму и выберите валюту!"
-      );
+      moneyManager.setMessage(false, response.error);
     }
   });
 };
@@ -54,10 +51,7 @@ moneyManager.conversionMoneyCallback = (data) => {
       ProfileWidget.showProfile(response.data);
       moneyManager.setMessage(true, "Конвертация прошла успешно!");
     } else {
-      moneyManager.setMessage(
-        false,
-        "У вас недостаточно средств на счете для конвертации! Введите сумму и выберите конвертируемую валюту!"
-      );
+      moneyManager.setMessage(false, response.error);
     }
   });
 };
@@ -72,10 +66,7 @@ moneyManager.sendMoneyCallback = (data) => {
         "Перевод денег прошел успешно!"
       );
     } else {
-      moneyManager.setMessage(
-        false,
-        "Ошибка перевода! Выберите пользователя, которому будут переведены деньги, введите сумму и выберите валюту! Сумма перевода не должна превышать сумму на вашем счету!"
-      );
+      moneyManager.setMessage(false, response.error);
     }
   });
 };
@@ -101,10 +92,7 @@ favoritesWidget.addUserCallback = (data) => {
         "Пользователь добавлен в избранное!"
       );
     } else {
-      favoritesWidget.setMessage(
-        false,
-        "Ошибка! Введите id и имя пользователя!"
-      );
+      favoritesWidget.setMessage(false, response.error);
     }
   });
 };
