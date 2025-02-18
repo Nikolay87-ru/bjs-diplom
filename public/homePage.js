@@ -8,13 +8,13 @@ logoutButton.action = () => {
       location.reload();
     }
   });
-};
+}
 
 ApiConnector.current((response) => {
   if (response.success) {
     ProfileWidget.showProfile(response.data);
   }
-});
+})
 
 const ratesBoard = new RatesBoard();
 
@@ -42,7 +42,7 @@ moneyManager.addMoneyCallback = (data) => {
       moneyManager.setMessage(false, response.error);
     }
   });
-};
+}
 
 moneyManager.conversionMoneyCallback = (data) => {
 
@@ -54,7 +54,7 @@ moneyManager.conversionMoneyCallback = (data) => {
       moneyManager.setMessage(false, response.error);
     }
   });
-};
+}
 
 moneyManager.sendMoneyCallback = (data) => {
 
@@ -69,7 +69,7 @@ moneyManager.sendMoneyCallback = (data) => {
       moneyManager.setMessage(false, response.error);
     }
   });
-};
+}
 
 const favoritesWidget = new FavoritesWidget();
 
@@ -95,7 +95,7 @@ favoritesWidget.addUserCallback = (data) => {
       favoritesWidget.setMessage(false, response.error);
     }
   });
-};
+}
 
 favoritesWidget.removeUserCallback = (data) => {
   ApiConnector.removeUserFromFavorites(data, (response) => {
@@ -109,4 +109,4 @@ favoritesWidget.removeUserCallback = (data) => {
       );
     } 
   });
-};
+}
